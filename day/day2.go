@@ -1,4 +1,4 @@
-package day2
+package day
 
 import (
 	"bufio"
@@ -10,7 +10,7 @@ import (
 
 func Day2() int {
 	currentDir, _ := os.Getwd()
-	file, err := os.Open(currentDir + "/day2/input.txt")
+	file, err := os.Open(currentDir + "/input/input_day2.txt")
 
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -47,21 +47,12 @@ func Day2() int {
 	return globalSum
 }
 
-func Day2_2() int {
-	currentDir, _ := os.Getwd()
-	file, err := os.Open(currentDir + "/day2/input.txt")
-
-	if err != nil {
-		fmt.Println("Error:", err)
-		return -1
-	}
-
-	scanner := bufio.NewScanner(file)
+func Day2_2(input string) int {
+	lines := strings.Split(input, "\n")
 	var globalSum int = 0
 
-	for scanner.Scan() {
-		currentLine := scanner.Text()
-		setOfDice := strings.Split(currentLine[7:], ";")
+	for  _,line := range lines[:len(lines)-1] {
+		setOfDice := strings.Split(line[7:], ";")
 		colorsMinimun := make(map[string]int)
 
 		for i := 0; i < len(setOfDice); i++ {

@@ -1,4 +1,4 @@
-package day1
+package day
 
 import (
 	"bufio"
@@ -10,7 +10,7 @@ import (
 
 func Day1() int {
 	currentDir, _ := os.Getwd()
-	file, err := os.Open(currentDir + "/day1/input.txt")
+	file, err := os.Open(currentDir + "/input/input_day1.txt")
 
 	if err != nil {
 		fmt.Println("Error:", err)
