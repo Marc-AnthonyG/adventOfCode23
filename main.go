@@ -14,7 +14,7 @@ import (
 
 func main() {
 	args := os.Args
-	dayNumber := "4"
+	dayNumber := "6"
 	
 	if len(args) >= 2 {
 		dayNumber = args[1]
@@ -26,7 +26,7 @@ func main() {
 		return
 	}
 
-	day.Day4(string(input))
+	day.Day6(string(input))
 }
 
 func fetchDayInputWithCaching(day string, forceRefetch bool) ([]byte, error) {
