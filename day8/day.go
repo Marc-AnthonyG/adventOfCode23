@@ -65,26 +65,56 @@ func Part2(input string) int {
 		}
 	}
 
-	numberOfSteps := 0
-	solutionFound := false
+	timeForEachPoint := make([]int, len(startingPoints))
 
-	for !solutionFound {
-		solutionFound = true
-		for index := range startingPoints {
+	for index, currentPoint := range startingPoints {
+		numberOfSteps := 0
+		for currentPoint[2] != 'Z' {
 			currentDiction := direction[numberOfSteps%len(direction)]
 			if currentDiction == 'R' {
-				nextPoint := points[startingPoints[index]].right
-				solutionFound = solutionFound && nextPoint[2] == 'Z'
-				startingPoints[index] = nextPoint
+				currentPoint = points[currentPoint].right
 			} else {
-				nextPoint := points[startingPoints[index]].left
-				solutionFound = solutionFound && nextPoint[2] == 'Z'
-				startingPoints[index] = nextPoint
+				currentPoint = points[currentPoint].left
 			}
+			numberOfSteps++
 		}
-		numberOfSteps++
-		fmt.Println(startingPoints)
+		timeForEachPoint[index] = numberOfSteps
 	}
 
-	return numberOfSteps
+
+	return findLCM(timeForEachPoint)
+}
+
+func gcd(a, b int) int {
+	for b != 0 {
+		a, b = b, a%b
+	}
+	return a
+}
+
+func lcm(a, b int) int {
+	return a * b / gcd(a, b)
+}
+
+func findLCM(numbers []int) int {
+	if len(numbers) == 0 {
+		return 0
+	}
+
+	result := numbers[0]
+	for i := 1; i < len(numbers); i++ {
+		result = lcm(result, numbers[i])
+	}
+
+	return result
+}
+
+func isCurrentStepSolution(startingPoints []string) bool {
+	for _, point := range startingPoints {
+		if point[2] != 'Z' {
+			return false
+		}
+	}
+
+	return true
 }
