@@ -1,19 +1,20 @@
 package main
 
 import (
-	"adventOfCode2023/day7"
+	"adventOfCode2023/day8"
 	"context"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"time"
+
 	"github.com/joho/godotenv"
 )
 
 func main() {
 	args := os.Args
-	dayNumber := "7"
+	dayNumber := "8"
 	
 	if len(args) >= 2 {
 		dayNumber = args[1]
@@ -25,7 +26,7 @@ func main() {
 		return
 	}
 
-	day7.Run(string(input))
+	day8.Run(string(input))
 }
 
 func fetchDayInputWithCaching(day string, forceRefetch bool) ([]byte, error) {
