@@ -21,11 +21,11 @@ func Test_Day8Part1(t *testing.T) {
 
 func Test_Day8Part2(t *testing.T) {
 	// given
-	//var input = "LR\n\n11A = (11B, XXX)\n11B = (XXX, 11Z)\n11Z = (11B, XXX)\n22A = (22B, XXX)\n22B = (22C, 22C)\n22C = (22Z, 22Z)\n22Z = (22B, 22B)\nXXX = (XXX, XXX)"
-	//actual := Part2(input)
+	var input = "LR\n\n11A = (11B, XXX)\n11B = (XXX, 11Z)\n11Z = (11B, XXX)\n22A = (22B, XXX)\n22B = (22C, 22C)\n22C = (22Z, 22Z)\n22Z = (22B, 22B)\nXXX = (XXX, XXX)"
+	actual := Part2(input)
 
-	if 1 != 6 {
-		t.Errorf("Part two was supposed to returned %d, got %d", 6, 1)
+	if actual != 6 {
+		t.Errorf("Part two was supposed to returned %d, got %d", 6, actual)
 	}
 }
 

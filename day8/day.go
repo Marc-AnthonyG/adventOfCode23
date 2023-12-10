@@ -40,7 +40,7 @@ func parseInput(input string) (string, map[string]Tuple) {
 	direction := lines[0]
 
 	points := make(map[string]Tuple)
-	pattern := `([A-Z]{3}) = \(([A-Z]{3}), ([A-Z]{3})\)`
+	pattern := `(\w{3}) = \((\w{3}), (\w{3})\)`
 	re := regexp.MustCompile(pattern)
 
 	for _, line := range lines[1:] {
@@ -83,6 +83,7 @@ func Part2(input string) int {
 			}
 		}
 		numberOfSteps++
+		fmt.Println(startingPoints)
 	}
 
 	return numberOfSteps
