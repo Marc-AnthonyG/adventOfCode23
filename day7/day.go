@@ -35,7 +35,59 @@ func parseInput(input string) []Hand {
 }
 
 func Part2(input string) int {
-	return -1
+	hands := parseInput(input)
+	result := make([][]Hand, 7)
+
+	for _, hand := range hands {
+		test := getCardFormatedWithWildCard(hand.card)
+		isPair := false
+		isThree := false
+		isFour := false
+		isFive := false
+		hasTwoPair := false
+
+		for _, value := range test {
+			if value == 2 {
+				hasTwoPair = isPair
+				isPair = true
+			} else if value == 3 {
+				isThree = true
+			} else if value == 4 {
+				isFour = true
+			} else if value == 5 {
+				isFive = true
+			}
+		}
+		
+		if isFive {
+			result[0] = appendInOrderWithWildcard(result[0], hand)
+		} else if isFour {
+			result[1] = appendInOrderWithWildcard(result[1], hand)
+		} else if isThree && isPair {
+			result[2] = appendInOrderWithWildcard(result[2], hand)
+		} else if isThree {
+			result[3] = appendInOrderWithWildcard(result[3], hand)
+		} else if isPair && hasTwoPair {
+			result[4] = appendInOrderWithWildcard(result[4], hand)
+		}else if isPair {
+			result[5] = appendInOrderWithWildcard(result[5], hand)
+		} else {
+			result[6] = appendInOrderWithWildcard(result[6], hand)
+		}
+	}
+
+	globalResult := 0
+	conteur := len(hands)
+
+	for _, value := range result {
+		fmt.Println(value)
+		for _, hand := range value {
+			globalResult += hand.bid * conteur
+			conteur--
+		}
+	}
+
+	return globalResult
 }
 
 func Part1(input string) int {
@@ -82,10 +134,8 @@ func Part1(input string) int {
 
 	globalResult := 0
 	conteur := len(hands)
-	fmt.Println(conteur)
 
 	for _, value := range result {
-		fmt.Println(value)
 		for _, hand := range value {
 			globalResult += hand.bid * conteur
 			conteur--
@@ -106,6 +156,29 @@ func appendInOrder(hands []Hand, hand Hand) []Hand {
 			if hands[mid].card[i] == hand.card[i] {
 				continue
 			} else if compare(rune(hand.card[i]), rune(hands[mid].card[i])) {
+				max = mid
+				break
+			} else {
+				min = mid + 1
+				break
+			}
+		}
+	}
+	
+	return insert(hands, min, hand)
+}
+
+func appendInOrderWithWildcard(hands []Hand, hand Hand) []Hand {
+	min := 0
+	max := len(hands)
+
+	for min < max {
+		mid := (min + max) / 2
+
+		for i := 0; i < len(hand.card); i++ {
+			if hands[mid].card[i] == hand.card[i] {
+				continue
+			} else if compareWithWildCard(rune(hand.card[i]), rune(hands[mid].card[i])) {
 				max = mid
 				break
 			} else {
@@ -144,6 +217,23 @@ func compare(r1 rune, r2 rune) bool {
 	return r1 > r2
 }
 
+func compareWithWildCard(r1 rune, r2 rune) bool {
+	if r1 == 'A' {
+		return true
+	} else if r1 == 'K' {
+		return r2 != 'A'
+	} else if r1 == 'Q' {
+		return r2 != 'A' && r2 != 'K'
+	} else if r1 == 'J' || r2 == 'J' {
+		return r1 != 'J'
+	} else if r1 == 'T' {
+		return r2 != 'A' && r2 != 'K' && r2 != 'Q'
+	}
+	
+
+	return r1 > r2
+}
+
 func getCardFormated(cards string) map[rune]int {
 	result := map[rune]int{}
 
@@ -155,5 +245,31 @@ func getCardFormated(cards string) map[rune]int {
 		}
 	}
 
+	return result
+}
+
+func getCardFormatedWithWildCard(cards string) map[rune]int {
+	result := map[rune]int{}
+
+	for _, card := range cards {
+		if _, ok := result[card]; ok {
+			result[card]++
+		} else {
+			result[card] = 1
+		}
+	}
+
+	var cardWithMostCard rune
+	for key := range result {
+		if key != 'J' && cardWithMostCard == 0 {
+			cardWithMostCard = key	
+		} else if key != 'J' && result[key] > result[cardWithMostCard] {
+			cardWithMostCard = key
+		}
+	}
+	
+	result[cardWithMostCard] = result[cardWithMostCard] + result['J']
+	delete(result, 'J')
+	
 	return result
 }
