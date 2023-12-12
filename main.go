@@ -1,7 +1,7 @@
 package main
 
 import (
-	"adventOfCode2023/day8"
+	"adventOfCode2023/day9"
 	"context"
 	"fmt"
 	"io"
@@ -14,7 +14,7 @@ import (
 
 func main() {
 	args := os.Args
-	dayNumber := "8"
+	dayNumber := "9"
 	
 	if len(args) >= 2 {
 		dayNumber = args[1]
@@ -26,7 +26,7 @@ func main() {
 		return
 	}
 
-	day8.Run(string(input))
+	day9.Run(string(input))
 }
 
 func fetchDayInputWithCaching(day string, forceRefetch bool) ([]byte, error) {
