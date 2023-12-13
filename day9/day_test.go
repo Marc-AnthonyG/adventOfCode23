@@ -5,27 +5,41 @@ import (
 )
 
 func Test_Day9Part1(t *testing.T) {
-	// given
-	var input = "RL\n\nAAA = (BBB, CCC)\nBBB = (DDD, EEE)\nCCC = (ZZZ, GGG)\nDDD = (DDD, DDD)\nEEE = (EEE, EEE)\nGGG = (GGG, GGG)\nZZZ = (ZZZ, ZZZ)\n"
-	var input2 = "LLR\n\nAAA = (BBB, BBB)\nBBB = (AAA, ZZZ)\nZZZ = (ZZZ, ZZZ)\n"
+	var input = "0 3 6 9 12 15"
+
 	actual := Part1(input)
+
+	if actual != 18 {
+		t.Errorf("Part one was supposed to returned %d, got %d", 18, actual)
+	}
+}
+
+func Test_Day9Part1largerInput(t *testing.T) {
+	var input2 = "0 3 6 9 12 15\n1 3 6 10 15 21\n10 13 16 21 30 45"
 	actual2 := Part1(input2)
 
-	if actual != 2{
-		t.Errorf("Part one was supposed to returned %d, got %d", 2, actual)
-	}
-	if actual2 != 6{
-		t.Errorf("Part one was supposed to returned %d, got %d", 6, actual)
+	if actual2 != 114 {
+		t.Errorf("Part one was supposed to returned %d, got %d", 114, actual2)
 	}
 }
+
 
 func Test_Day9Part2(t *testing.T) {
-	// given
-	var input = "LR\n\n11A = (11B, XXX)\n11B = (XXX, 11Z)\n11Z = (11B, XXX)\n22A = (22B, XXX)\n22B = (22C, 22C)\n22C = (22Z, 22Z)\n22Z = (22B, 22B)\nXXX = (XXX, XXX)"
+	var input = "0 3 6 9 12 15"
+
 	actual := Part2(input)
 
-	if actual != 6 {
-		t.Errorf("Part two was supposed to returned %d, got %d", 6, actual)
+	if actual != -3 {
+		t.Errorf("Part one was supposed to returned %d, got %d", -3, actual)
 	}
 }
 
+func Test_Day9Part2Diff(t *testing.T) {
+	var input = "10 13 16  21 30 45"
+
+	actual := Part2(input)
+
+	if actual != 5 {
+		t.Errorf("Part one was supposed to returned %d, got %d", 5, actual)
+	}
+}
